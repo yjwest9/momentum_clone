@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Tab</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      .morning {
+        background-image: url("https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg");
+      }
+      .afternoon {
+        background-image: url("https://images.pexels.com/photos/1110656/pexels-photo-1110656.jpeg");
+      }
+      .evening {
+        background-image: url("https://images.pexels.com/photos/533881/pexels-photo-533881.jpeg");
+      }
+      .night {
+        background-image: url("https://images.pexels.com/photos/12917463/pexels-photo-12917463.jpeg");
+      }
+      body {
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        min-height: 100vh;
+        transition: background 0.5s;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding: 50px 0;
+      }
+      #timeArea {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: auto;
+        margin-bottom: auto;
+        transform: translateY(-30px);
+        color: white;
+      }
+      #nowTime {
+        font-size: 150px;
+        font-weight: 500;
+      }
+      #helloWords {
+        font-size: 50px;
+        font-weight: 500;
+        margin-top: -20px;
+      }
+      #wiseArea {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+      }
+      #wiseSaying {
+        color: white;
+      }
+      #wiseSaying span:first-of-type {
+        font-size: 1.1rem;
+      }
+      #wiseSaying span:last-of-type {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.7);
+      }
+      #wiseSaying i {
+        font-style: italic;
+        font-family: serif;
+        font-size: 1.5rem;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="timeArea">
+      <p id="nowTime"></p>
+      <p id="helloWords"></p>
+    </div>
+    <div id="wiseArea">
+      <p id="wiseSaying"></p>
+    </div>
+
+    <script>
+      const nowTime = document.getElementById("nowTime");
+      const clock = () => {
+        const now = new Date();
+        let h = now.getHours();
+        let m = now.getMinutes();
+        if (h < 10) {
+          h = "0" + h;
+        }
+        if (m < 10) {
+          m = "0" + m;
+        }
+        nowTime.textContent = h + ":" + m;
+      };
+      clock();
+      setInterval(clock, 1000);
+
+      const body = document.body;
+      const helloWordsElement = document.getElementById("helloWords");
+      const helloWords = [
+        "Good morning",
+        "Good afternoon",
+        "Good evening",
+        "Good night",
+      ];
+
+      const hour = new Date().getHours();
+      let index = 0;
+
+      if (hour >= 5 && hour < 12) {
+        index = 0;
+        body.classList.add("morning");
+      } else if (hour < 18) {
+        index = 1;
+        body.classList.add("afternoon");
+      } else if (hour < 22) {
+        index = 2;
+        body.classList.add("evening");
+      } else {
+        index = 3;
+        body.classList.add("night");
+      }
+      helloWordsElement.textContent = helloWords[index];
+
+      const wiseSayingElement = document.getElementById("wiseSaying");
+      const wiseSaying = [
+        {
+          en: "Believe you can and you're halfway there.",
+          ko: "(할 수 있다고 믿어라. 그러면 이미 반은 온 것이다.)",
+        },
+        {
+          en: "It always seems impossible until it's done.",
+          ko: "(끝내기 전까지는 항상 불가능해 보인다.)",
+        },
+        {
+          en: "One day or day one. You decide.",
+          ko: "(언젠가 하겠다는 생각, 혹은 오늘이 바로 그날. 당신이 결정하라.)",
+        },
+        {
+          en: "The best view comes after the hardest climb.",
+          ko: "(가장 아름다운 풍경은 가장 힘든 등반 후에 온다.)",
+        },
+        {
+          en: "Run when you can, walk if you have to, crawl if you must; just never give up.",
+          ko: "(달릴 수 있을 땐 달리고, 걸어야 하면 걷고, 기어야 하면 기어라. 절대 포기하지 마라.)",
+        },
+      ];
+      const randomIndex = Math.floor(Math.random() * wiseSaying.length);
+      const picked = wiseSaying[randomIndex];
+      wiseSayingElement.innerHTML = `<i>"</i><span>${picked.en}</span><i>"</i><br><span>${picked.ko}</span>`;
+    </script>
+  </body>
+</html>
