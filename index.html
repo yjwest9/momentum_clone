@@ -32,35 +32,62 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-between;
-        padding: 50px 0;
+        justify-content: center;
+        padding: 40px 0;
       }
       #timeArea {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: auto;
-        margin-bottom: auto;
-        transform: translateY(-30px);
         color: white;
       }
       #nowTime {
         font-size: 150px;
         font-weight: 500;
+        line-height: 1;
       }
       #helloWords {
         font-size: 50px;
         font-weight: 500;
-        margin-top: -20px;
+        margin-top: 10px;
+      }
+      #goalArea {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+      }
+      #todayGoal {
+        color: white;
+        font-size: 2rem;
+        text-align: center;
+      }
+      #inputGoal {
+        background: transparent;
+        border: none;
+        outline: none;
+        border-bottom: 2px solid white;
+        padding: 20px 0;
+        width: 530px;
+        text-align: center;
+
+        caret-color: white;
+        font-size: 2rem;
+        text-align: center;
+        display: block;
+        margin: 0 auto;
       }
       #wiseArea {
         display: flex;
         flex-direction: column;
+        position: absolute;
+        bottom: 30px;
+        width: 100%;
       }
       #wiseSaying {
         text-align: center;
         color: white;
-        text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+        text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
       }
       .quote {
         font-size: 1.3em;
@@ -82,6 +109,11 @@
     <div id="timeArea">
       <p id="nowTime"></p>
       <p id="helloWords"></p>
+    </div>
+    <div id="goalArea">
+      <p id="todayGoal"></p>
+      <input type="text" id="inputGoal" />
+      <p id="inputText"></p>
     </div>
     <div id="wiseArea">
       <p id="wiseSaying"></p>
@@ -130,6 +162,20 @@
         body.classList.add("night");
       }
       helloWordsElement.textContent = helloWords[index];
+
+      const todayGoal = document.getElementById("todayGoal");
+      todayGoal.textContent = "What is your main goal for today?";
+
+      function getTodo() {
+        const inputText = document.getElementById("inputText");
+        const todo = localStorage.getItem("todo");
+        inputText.textContent = todo;
+      }
+
+      function setTodo() {
+        const inputValue = document.getElementById("inputGoal").value;
+        localStorage.setItem("todo");
+      }
 
       const wiseSayingElement = document.getElementById("wiseSaying");
       const wiseSaying = [

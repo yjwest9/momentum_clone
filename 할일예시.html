@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="todoInput">
+    <p id="todoText"></p>
+    <script>
+        // 처음 웹페이지를 켤때 실행하기 or 할일이 저장됐을때 실행하기
+        function getTodo(){
+           let p = document.getElementById("todoText");
+           let todo = localStorage.getItem("todo");
+           p.textContent = todo;
+        }
+        // 아래 함수는 버튼을 클릭하거나 enter했을때 실행하기
+        function setTodo(){
+            // input에 적은 내용 가져오기
+            let input = document.getElementById("todoInput").value;
+            // 로컬스토리지에 적은내용 저장하기
+            localStorage.setItem("todo",input);
+        }
+    </script>
+</body>
+</html>
+
