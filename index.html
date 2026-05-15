@@ -71,11 +71,37 @@
         width: 530px;
         text-align: center;
 
+        color: white;
         caret-color: white;
         font-size: 2rem;
         text-align: center;
         display: block;
         margin: 0 auto;
+      }
+      #inputText {
+        color: white;
+        font-size: 2rem;
+        font-weight: 500;
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+      }
+      #resetGoalBtn {
+        display: none;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        color: rgba(255, 255, 255, 0.8);
+        padding: 5px 15px;
+        margin-top: 15px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        transition: all 0.3s;
+
+        align-self: center;
+      }
+      #resetGoalBtn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border-color: white;
       }
       #wiseArea {
         display: flex;
@@ -114,6 +140,7 @@
       <p id="todayGoal"></p>
       <input type="text" id="inputGoal" />
       <p id="inputText"></p>
+      <button id="resetGoalBtn">Modify</button>
     </div>
     <div id="wiseArea">
       <p id="wiseSaying"></p>
@@ -164,18 +191,48 @@
       helloWordsElement.textContent = helloWords[index];
 
       const todayGoal = document.getElementById("todayGoal");
-      todayGoal.textContent = "What is your main goal for today?";
+      const inputText = document.getElementById("inputText");
+      const inputGoal = document.getElementById("inputGoal");
+      const resetGoalBtn = document.getElementById("resetGoalBtn");
 
-      function getTodo() {
-        const inputText = document.getElementById("inputText");
-        const todo = localStorage.getItem("todo");
-        inputText.textContent = todo;
-      }
+      todayGoal.textContent = "What is your main goal for today?";
 
       function setTodo() {
         const inputValue = document.getElementById("inputGoal").value;
-        localStorage.setItem("todo");
+        localStorage.setItem("todo", inputValue);
       }
+
+      function getTodo() {
+        const todo = localStorage.getItem("todo");
+        if (todo) {
+          inputText.textContent = todo;
+
+          todayGoal.style.display = "none";
+          inputGoal.style.display = "none";
+          inputText.style.display = "block";
+          resetGoalBtn.style.display = "block";
+        } else {
+          todayGoal.style.display = "block";
+          inputGoal.style.display = "block";
+          inputText.style.display = "none";
+          resetGoalBtn.style.display = "none";
+          inputGoal.value = "";
+        }
+      }
+
+      inputGoal.addEventListener("keypress", function (event) {
+        if (event.key === "Enter" && inputGoal.value.trim() !== "") {
+          setTodo();
+          getTodo();
+        }
+      });
+
+      resetGoalBtn.addEventListener("click", function () {
+        localStorage.removeItem("todo");
+        getTodo();
+      });
+
+      getTodo();
 
       const wiseSayingElement = document.getElementById("wiseSaying");
       const wiseSaying = [
